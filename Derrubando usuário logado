@@ -1,0 +1,32 @@
+Vamos supor que existe um usuário travado no seu sistema e você precisa derrubar.
+
+Utilize o comando w para mosntrar quem quem está no sistema ou que comando cada job está a executar.
+
+Com o comando w irá verificar todos os usuarios logados e qual TTY que estão conectados
+[root@srv_treinamento ~]# w
+15:39:33 up 10 days, 46 min,  2 users,  load average: 0.03, 0.03, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    172.18.3.27      11:17    4:21m  0.02s  0.02s -bash
+root     pts/1    172.18.3.59      15:39    2.00s  0.01s  0.00s w
+
+Com o número do TTY em mãos verifique qual o número do processo bash
+Utilizando o comando ps irá listar os processos em execução, útil para saber o pid de um processo para o mandar abaixo com o 
+comando kill, entre outras coisas.
+
+[root@srv_treinamento ~]#  ps ax | grep pts/0
+ 9709 pts/1    S+     0:00 grep --color=auto pts/0
+10574 ?        Ss     0:00 sshd: root@pts/0
+10585 pts/0    Ss+    0:00 -bash
+
+O comando Kill mata um processo, como por exemplo kill -kill 100 ou kill -9 100 ou kill -9 %1
+
+[root@srv_treinamento ~]# kill -9 10585
+
+[root@srv_treinamento ~]# w
+15:40:50 up 10 days, 48 min,  1 user,  load average: 0.01, 0.02, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/1    172.18.3.59      15:39    2.00s  0.05s  0.00s w
+
+
+Procedimento executado como teste, para iniciante no mundo linux.
+Foi utlizado o SO CentOS Linux release 7.6.1810 (Core)
